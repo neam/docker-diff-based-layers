@@ -1,6 +1,8 @@
 old:
   image: "${OLD_IMAGE}"
-  command: /bin/bash -c 'echo "[root]" > /tmp/.rsyncd.conf;echo "path = /" >> /tmp/.rsyncd.conf;echo "read only = false" >> /tmp/.rsyncd.conf;rsync --daemon --port 873 --no-detach -vv --config /tmp/.rsyncd.conf'
+  volumes:
+    - .:/.docker-image-diff/
+  command: /.docker-image-diff/expose-filesystem-root.sh
   expose:
     - "873"
 new_large_layer:
@@ -8,7 +10,7 @@ new_large_layer:
   links:
    - old
   volumes:
-    - .rsync-output/:/rsync-output/
+    - .:/.docker-image-diff/
   environment:
-    - RESTRICT_DIFF_TO_PATH="${RESTRICT_DIFF_TO_PATH}"
-  command: /bin/bash -c "rsync -a -x --human-readable --delete-after --checksum --dry-run --itemize-changes --exclude .rsync-output ${RESTRICT_DIFF_TO_PATH}/ rsync://rsync@old/root${RESTRICT_DIFF_TO_PATH}/ | tee /rsync-output/changes.log"
+    - RESTRICT_DIFF_TO_PATH=${RESTRICT_DIFF_TO_PATH}
+  command: /.docker-image-diff/create-changelog-to-go-from-old-to-new.sh
