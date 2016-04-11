@@ -1,0 +1,13 @@
+shell:
+  build: .
+  dockerfile: shell.Dockerfile
+  volumes:
+    - .:/.docker-image-diff/
+    - ./output/:/.docker-image-diff-output/
+  environment:
+    - OLD_IMAGE=${OLD_IMAGE}
+    - NEW_IMAGE=${NEW_IMAGE}
+    - RESTRICT_DIFF_TO_PATH=${RESTRICT_DIFF_TO_PATH}
+    - OUT=/.docker-image-diff-output
+  working_dir: /.docker-image-diff/
+  command: /.docker-image-diff/generate-dockerfile.sh

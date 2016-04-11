@@ -11,6 +11,9 @@ new_large_layer:
    - old
   volumes:
     - .:/.docker-image-diff/
+    - ./output/:/.docker-image-diff-output/
   environment:
     - RESTRICT_DIFF_TO_PATH=${RESTRICT_DIFF_TO_PATH}
+    - OUT=/.docker-image-diff-output
+  working_dir: /.docker-image-diff/
   command: /.docker-image-diff/create-changelog-to-go-from-old-to-new.sh
