@@ -1,0 +1,14 @@
+old:
+  image: "${OLD_IMAGE}"
+  command: /bin/bash -c 'echo "[root]" > /tmp/.rsyncd.conf;echo "path = /" >> /tmp/.rsyncd.conf;echo "read only = false" >> /tmp/.rsyncd.conf;rsync --daemon --port 873 --no-detach -vv --config /tmp/.rsyncd.conf'
+  expose:
+    - "873"
+new_large_layer:
+  image: "${NEW_IMAGE}"
+  links:
+   - old
+  volumes:
+    - .rsync-output/:/rsync-output/
+  environment:
+    - RESTRICT_DIFF_TO_PATH="${RESTRICT_DIFF_TO_PATH}"
+  command: /bin/bash -c "rsync -a -x --human-readable --delete-after --checksum --dry-run --itemize-changes --exclude .rsync-output ${RESTRICT_DIFF_TO_PATH}/ rsync://rsync@old/root${RESTRICT_DIFF_TO_PATH}/ | tee /rsync-output/changes.log"
