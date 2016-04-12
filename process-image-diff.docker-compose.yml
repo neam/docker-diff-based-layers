@@ -3,4 +3,3 @@ shell:
     - OLD_IMAGE=${OLD_IMAGE}
     - NEW_IMAGE=${NEW_IMAGE}
     - RESTRICT_DIFF_TO_PATH=${RESTRICT_DIFF_TO_PATH}
-  command: /.docker-image-diff/generate-dockerfile.sh

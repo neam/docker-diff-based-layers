@@ -69,7 +69,7 @@ export RESTRICT_DIFF_TO_PATH=/app
 export OLD_IMAGE=sample-project:revision-1
 export NEW_IMAGE=sample-project:revision-2
 docker-compose -f rsync-image-diff.docker-compose.yml up
-docker-compose -f shell.docker-compose.yml -f process-image-diff.docker-compose.yml up
+docker-compose -f shell.docker-compose.yml -f process-image-diff.docker-compose.yml run --rm shell ./generate-dockerfile.sh
 cd output; docker build -t sample-project:revision-2-processed .; cd ..
 ```
 
@@ -82,7 +82,7 @@ Output:
 ```
 IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
 1920e750d362        24 seconds ago      /bin/sh -c if [ -s /.files-to-remove.list ];    0 B
-1267bf926729        4 seconds ago       /bin/sh -c #(nop) ADD file:5021c627243e841a45   19 B
+1267bf926729        2 minutes ago       /bin/sh -c #(nop) ADD file:5021c627243e841a45   19 B
 d04a2181b62a        2 minutes ago       /bin/sh -c #(nop) ADD file:14780990c926e673f2   264 B
 d4b30af167f4        7 minutes ago       /bin/sh -c #(nop) COPY dir:68b8f374d8731b8ad8   16.78 MB
 c898fe1daa44        9 minutes ago       /bin/sh -c apt-get update && apt-get install    10.77 MB
