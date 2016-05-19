@@ -1,0 +1,31 @@
+{
+  "name": "neam/docker-diff-based-layers",
+  "description": "Provides tools to work around the fact that subsequent COPY . /app commands in any environments re-adds all files in every layer instead of only the files that have changed",
+  "keywords": [
+    "php",
+    "docker",
+    "docker-stack",
+    "docker-cloud"
+  ],
+  "homepage": "https://github.com/neam/docker-diff-based-layers",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fredrik Wollsén",
+      "email": "fredrik@neam.se",
+      "homepage": "http://www.neam.se"
+    },
+    {
+      "name": "Project Contributors",
+      "homepage": "https://github.com/neam/docker-diff-based-layersgraphs/contributors"
+    },
+    {
+      "name": "Open Source Community"
+    }
+  ],
+  "require": {
+  },
+  "require-dev": {
+  }
+}
