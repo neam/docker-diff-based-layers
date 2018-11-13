@@ -1,3 +1,2 @@
-FROM fedora:28
-RUN dnf update -y
-RUN dnf install -y gettext-devel intltool
+FROM debian:jessie
+RUN apt-get update && apt-get install gettext -y
