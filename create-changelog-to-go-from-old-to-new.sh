@@ -9,10 +9,10 @@ cat $OUT/changes.rsync.log | grep  -E '^<f|^cL|^hf' | while read -a cols; do ech
 
 # soft links (^cL in the grep above) have -> in the list which must be removed.  Hard links ^hf have =>
 cat $OUT/files-to-add_2.list | grep -oP '^\K.*?(?= ->| =>|$)' > $OUT/files-to-add.list
-tar -cf $OUT/files-to-add.tar -T $OUT/files-to-add.list 2>&1 -C /
+tar -C / -cf $OUT/files-to-add.tar -T $OUT/files-to-add.list 2>&1
 
 # Add files to remove to a list
-cat $OUT/changes.rsync.log | grep '^*deleting' | while read -a cols; do echo "$RESTRICT_DIFF_TO_PATH/"${cols[@]:1}; done > $OUT/files-to-remove.list
+cat $OUT/changes.rsync.log | grep '^*deleting' | grep -v 'tmp\/\.rsyncd\.conf' | while read -a cols; do echo "$RESTRICT_DIFF_TO_PATH/"${cols[@]:1}; done > $OUT/files-to-remove.list
 
 # Informational output
 echo
